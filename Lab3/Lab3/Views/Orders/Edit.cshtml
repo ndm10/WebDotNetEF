@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Lab3.Models
+@model Order
+<div>
+    @if (Model is null)
+    {
+        <div>Khong co order theo yeu cau</div>
+    }
+    else
+    {
+        <div>
+            <form action="/Orders/DoEdit" method="post">
+                <input name="order.orderid" type="hidden" value="@Model.OrderId" readonly />
+                <br>
+                <br>
+                Employee: <select name="order.employeeid">
+                    @foreach (Employee em in ViewBag.listEm)
+                    {
+                        <option value="@em.EmployeeId" @(em.EmployeeId == Model.EmployeeId?"selected":"")>@em.LastName @em.FirstName</option>
+                    }
+                </select>
+                <br>
+                Customer: <select name="order.customerid">
+                    @foreach (Customer cus in ViewBag.listCus)
+                    {
+                        <option value="@cus.CustomerId" @(cus.CustomerId.Equals(Model.CustomerId)?"selected":"")>@cus.CompanyName</option>
+                    }
+                </select>
+                <br>
+                Order Date: <input type="datetime" value="@Model.OrderDate" name="order.orderdate">
+                <br>
+                Freigth: <input type="number" value="@Model.Freight" name="order.freight">
+                <br>
+                <input type="submit" value="Edit">
+            </form>
+        </div>
+    }
+</div>

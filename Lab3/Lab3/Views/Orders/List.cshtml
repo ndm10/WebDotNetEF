@@ -1,0 +1,67 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using Lab3.Models
+@model List<Order>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<div>
+    <formz>
+        <select name="order.employeeId">
+            <option value="0">---All---</option>
+            @foreach (Employee em in ViewBag.listEm)
+            {
+                <option value="@em.EmployeeId">@em.LastName @em.FirstName</option>
+            }
+        </select>
+        From: <input type="date" name="order.minOrD" value="@ViewBag.minOrD"> </input>
+        To: <input type="date" name="order.maxOrD" value="@ViewBag.maxOrD"> </input>
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div>
+    <div style="width:70%; float:left;">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>CustomerID</th>
+                <th>Employee ID</th>
+                <th>Order Date</th>
+                <th>Freight</th>
+                <th>Action</th>
+            </tr>
+            <tbody>
+                @foreach (Order o in Model)
+                {
+                    <tr>
+                        <td>@o.OrderId</td>
+                        <td>@o.CustomerId</td>
+                        <td>@o.EmployeeId</td>
+                        <td>@o.OrderDate.Value.ToShortDateString()</td>
+                        <td>@o.Freight</td>
+                        <td>
+                            <a href="/Orders/Edit/@o.OrderId">Edit</a>
+                            <a href="/Orders/DoDelete/@o.OrderId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
